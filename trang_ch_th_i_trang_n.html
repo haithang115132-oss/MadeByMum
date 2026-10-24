@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUM'S ATELIER | Thời Trang Nữ Cao Cấp</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        beige: {
+                            50: '#FDFBF7',
+                            100: '#F4EFEA',
+                            200: '#E6DDD0',
+                            300: '#D2C4B0',
+                            400: '#B8A58A',
+                            800: '#5C5040',
+                            900: '#3D3428'
+                        },
+                        cream: '#FAF8F5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF7;
+            color: #3D3428;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F4EFEA;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D2C4B0;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B8A58A;
+        }
+    </style>
+</head>
+<body class="bg-beige-50 text-beige-900 antialiased selection:bg-beige-200 selection:text-beige-900">
+
+    <!-- Thông báo đầu trang -->
+    <div class="bg-beige-900 text-beige-50 text-xs py-2 text-center tracking-widest uppercase font-medium px-4">
+        Miễn phí vận chuyển toàn quốc cho đơn hàng từ 500.000₫ • Nhập mã <span class="underline font-bold">MUMNEW</span> giảm ngay 10%
+    </div>
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-40 bg-beige-50/90 backdrop-blur-md border-b border-beige-200 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden text-beige-900 p-2 focus:outline-none">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+
+            <!-- Logo -->
+            <div class="flex-1 md:flex-initial text-center md:text-left">
+                <a href="#" class="font-serif text-2xl sm:text-3xl font-bold tracking-wider uppercase text-beige-900">
+                    MUM'S <span class="font-light italic text-beige-400">Atelier</span>
+                </a>
+            </div>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
+                <a href="#home" class="text-beige-900 hover:text-beige-400 transition-colors py-2 border-b-2 border-beige-900">Trang chủ</a>
+                <a href="#shop" class="text-beige-800/80 hover:text-beige-900 transition-colors py-2 border-b-2 border-transparent hover:border-beige-900">Bộ Sưu Tập</a>
+                <a href="#about" class="text-beige-800/80 hover:text-beige-900 transition-colors py-2 border-b-2 border-transparent hover:border-beige-900">Câu Chuyện Mum</a>
+                <a href="#contact" class="text-beige-800/80 hover:text-beige-900 transition-colors py-2 border-b-2 border-transparent hover:border-beige-900">Liên hệ</a>
+            </nav>
+
+            <!-- Actions (Search, Wishlist, Cart) -->
+            <div class="flex items-center space-x-4 sm:space-x-6">
+                <button onclick="openSearchModal()" class="text-beige-800 hover:text-beige-900 transition-colors p-2" title="Tìm kiếm">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </button>
+                <button onclick="toggleCartDrawer()" class="relative text-beige-800 hover:text-beige-900 transition-colors p-2" title="Giỏ hàng">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute top-0 right-0 bg-beige-900 text-beige-50 text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-beige-50 shadow-sm transition-transform scale-100">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden transition-opacity opacity-0 md:hidden">
+        <div class="absolute top-0 left-0 bottom-0 w-4/5 max-w-xs bg-beige-50 p-6 flex flex-col justify-between shadow-2xl transform -translate-x-full transition-transform duration-300" id="mobile-menu-content">
+            <div>
+                <div class="flex items-center justify-between pb-6 border-b border-beige-200">
+                    <span class="font-serif text-xl font-bold tracking-wider uppercase">Menu</span>
+                    <button onclick="closeMobileMenu()" class="text-beige-900 p-2">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+                <nav class="flex flex-col space-y-4 pt-6 text-base font-medium">
+                    <a href="#home" onclick="closeMobileMenu()" class="text-beige-900 hover:pl-2 transition-all">Trang chủ</a>
+                    <a href="#shop" onclick="closeMobileMenu()" class="text-beige-800 hover:pl-2 transition-all">Bộ Sưu Tập</a>
+                    <a href="#about" onclick="closeMobileMenu()" class="text-beige-800 hover:pl-2 transition-all">Câu Chuyện Mum</a>
+                    <a href="#contact" onclick="closeMobileMenu()" class="text-beige-800 hover:pl-2 transition-all">Liên hệ</a>
+                </nav>
+            </div>
+            <div class="text-xs text-beige-400 text-center py-4 border-t border-beige-200">
+                © 2026 MUM'S ATELIER. All rights reserved.
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main id="home">
+        
+        <!-- Hero Section / Banner Slider -->
+        <section class="relative bg-beige-100 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-center lg:text-left z-10">
+                    <span class="inline-block bg-beige-200/70 text-beige-900 text-xs tracking-widest uppercase px-3 py-1.5 rounded-full font-semibold">
+                        Spring / Summer 2026 Collection
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
+                        Vẻ Đẹp Tinh Khôi, <br/><span class="italic font-normal text-beige-400">Đậm Chất Thơ</span>
+                    </h1>
+                    <p class="text-beige-800/80 text-base sm:text-lg max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
+                        Những thiết kế mang tinh thần "Made by Mum" trau chuốt từng đường kim mũi chỉ, tôn vinh nét đẹp thanh lịch và dịu dàng của người phụ nữ hiện đại.
+                    </p>
+                    <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#shop" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-beige-900 text-beige-50 text-sm uppercase tracking-widest font-medium rounded-full hover:bg-beige-800 transition-all shadow-lg hover:shadow-xl">
+                            Khám Phá Ngay <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                        <a href="#about" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 border border-beige-400 text-beige-900 text-sm uppercase tracking-widest font-medium rounded-full hover:bg-beige-200/50 transition-all">
+                            Câu Chuyện
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Hero Image Carousel / Illustration -->
+                <div class="relative flex justify-center">
+                    <div class="relative w-full max-w-md lg:max-w-lg aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl bg-beige-200">
+                        <img id="hero-img" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800" alt="New Arrival" class="w-full h-full object-cover transition-opacity duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6 text-white">
+                            <p class="text-xs uppercase tracking-widest opacity-90">Sản phẩm nổi bật</p>
+                            <p class="font-serif text-xl sm:text-2xl font-bold">Đầm Midi Linen Tự Nhiên</p>
+                            <p class="text-sm opacity-90 mt-1">1.250.000₫</p>
+                        </div>
+                    </div>
+                    <!-- Decorative badge -->
+                    <div class="absolute -top-4 -right-4 w-28 h-28 bg-beige-300/40 rounded-full flex items-center justify-center backdrop-blur-md border border-beige-200 hidden sm:flex animate-spin" style="animation-duration: 20s;">
+                        <span class="text-[10px] uppercase tracking-widest font-bold text-beige-900 text-center">Made By Mum • Est 2026</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Showcase -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs uppercase tracking-widest text-beige-400 font-semibold">Khám phá theo phong cách</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mt-2">Danh Mục Thiết Kế</h2>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                <div onclick="filterCategory('Đầm')" class="group relative rounded-2xl overflow-hidden cursor-pointer shadow-md bg-beige-200 aspect-[3/4]">
+                    <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&q=80&w=600" alt="Đầm" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-beige-900/70 via-beige-900/20 to-transparent flex flex-col justify-end p-6 text-white">
+                        <h3 class="font-serif text-xl font-bold">Đầm</h3>
+                        <p class="text-xs opacity-80 mt-1">12 Thiết kế mới</p>
+                    </div>
+                </div>
+                <div onclick="filterCategory('Áo sơ mi')" class="group relative rounded-2xl overflow-hidden cursor-pointer shadow-md bg-beige-200 aspect-[3/4]">
+                    <img src="https://images.unsplash.com/photo-1598554747436-c9293d6a588f?auto=format&fit=crop&q=80&w=600" alt="Áo sơ mi" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-beige-900/70 via-beige-900/20 to-transparent flex flex-col justify-end p-6 text-white">
+                        <h3 class="font-serif text-xl font-bold">Áo Sơ Mi</h3>
+                        <p class="text-xs opacity-80 mt-1">8 Thiết kế mới</p>
+                    </div>
+                </div>
+                <div onclick="filterCategory('Chân váy')" class="group relative rounded-2xl overflow-hidden cursor-pointer shadow-md bg-beige-200 aspect-[3/4]">
+                    <img src="https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?auto=format&fit=crop&q=80&w=600" alt="Chân váy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-beige-900/70 via-beige-900/20 to-transparent flex flex-col justify-end p-6 text-white">
+                        <h3 class="font-serif text-xl font-bold">Chân Váy</h3>
+                        <p class="text-xs opacity-80 mt-1">9 Thiết kế mới</p>
+                    </div>
+                </div>
+                <div onclick="filterCategory('Set bộ')" class="group relative rounded-2xl overflow-hidden cursor-pointer shadow-md bg-beige-200 aspect-[3/4]">
+                    <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&q=80&w=600" alt="Set bộ" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-beige-900/70 via-beige-900/20 to-transparent flex flex-col justify-end p-6 text-white">
+                        <h3 class="font-serif text-xl font-bold">Set Bộ</h3>
+                        <p class="text-xs opacity-80 mt-1">6 Thiết kế mới</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catalog / Shop Section -->
+        <section id="shop" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-beige-200">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-beige-400 font-semibold">Danh mục sản phẩm</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold mt-2">Bộ Sưu Tập Chính</h2>
+                </div>
+                
+                <!-- Category Filter Buttons -->
+                <div class="flex flex-wrap gap-2 mt-6 md:mt-0" id="filter-buttons">
+                    <button onclick="filterCategory('All')" class="px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all bg-beige-900 text-beige-50 shadow-sm" data-category="All">Tất cả</button>
+                    <button onclick="filterCategory('Đầm')" class="px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all bg-beige-100 text-beige-800 hover:bg-beige-200" data-category="Đầm">Đầm</button>
+                    <button onclick="filterCategory('Áo sơ mi')" class="px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all bg-beige-100 text-beige-800 hover:bg-beige-200" data-category="Áo sơ mi">Áo sơ mi</button>
+                    <button onclick="filterCategory('Chân váy')" class="px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all bg-beige-100 text-beige-800 hover:bg-beige-200" data-category="Chân váy">Chân váy</button>
+                    <button onclick="filterCategory('Set bộ')" class="px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all bg-beige-100 text-beige-800 hover:bg-beige-200" data-category="Set bộ">Set bộ</button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Products will be rendered dynamically by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Brand Story Section -->
+        <section id="about" class="bg-beige-100 py-20 my-16">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+                <span class="text-xs uppercase tracking-widest text-beige-400 font-semibold">Made By Mum Story</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold leading-tight">
+                    "Mỗi chiếc áo được làm ra bằng tất cả sự tỉ mỉ và yêu thương như mẹ chăm chút cho người thân."
+                </h2>
+                <p class="text-beige-800/80 max-w-2xl mx-auto text-base sm:text-lg font-light leading-relaxed">
+                    Mum's Atelier ra đời từ niềm đam mê may vá và mong muốn mang lại những trang phục bền vững, chất liệu tự nhiên lành tính (linen, cotton lụa) cùng phom dáng vượt thời gian cho phụ nữ Việt.
+                </p>
+                <div class="pt-4 grid grid-cols-3 gap-6 max-w-xl mx-auto text-center border-t border-beige-300/60 pt-8">
+                    <div>
+                        <p class="font-serif text-2xl sm:text-3xl font-bold text-beige-900">100%</p>
+                        <p class="text-xs uppercase tracking-wider text-beige-400 mt-1">Chất liệu tự nhiên</p>
+                    </div>
+                    <div>
+                        <p class="font-serif text-2xl sm:text-3xl font-bold text-beige-900">500+</p>
+                        <p class="text-xs uppercase tracking-wider text-beige-400 mt-1">Thiết kế độc quyền</p>
+                    </div>
+                    <div>
+                        <p class="font-serif text-2xl sm:text-3xl font-bold text-beige-900">12k+</p>
+                        <p class="text-xs uppercase tracking-wider text-beige-400 mt-1">Khách hàng tin yêu</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-beige-900 text-beige-100 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-beige-800">
+            <div class="space-y-4">
+                <span class="font-serif text-2xl font-bold tracking-wider uppercase text-beige-50">
+                    MUM'S <span class="font-light italic text-beige-400">Atelier</span>
+                </span>
+                <p class="text-xs text-beige-300 font-light leading-relaxed">
+                    Thương hiệu thời trang nữ thiết kế cao cấp mang tinh thần tối giản, sang trọng và bền vững.
+                </p>
+                <div class="flex space-x-4 text-beige-300">
+                    <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-serif text-lg font-bold mb-4 text-beige-50">Liên Hệ</h4>
+                <ul class="space-y-2 text-xs text-beige-300 font-light">
+                    <li><i class="fa-solid fa-location-dot mr-2"></i> 123 Đồng Khởi, Quận 1, TP. HCM</li>
+                    <li><i class="fa-solid fa-phone mr-2"></i> 0901 234 567</li>
+                    <li><i class="fa-solid fa-envelope mr-2"></i> contact@mumsatelier.vn</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-serif text-lg font-bold mb-4 text-beige-50">Hỗ Trợ Khách Hàng</h4>
+                <ul class="space-y-2 text-xs text-beige-300 font-light">
+                    <li><a href="#" class="hover:underline">Chính sách đổi trả</a></li>
+                    <li><a href="#" class="hover:underline">Hướng dẫn chọn size</a></li>
+                    <li><a href="#" class="hover:underline">Chính sách vận chuyển</a></li>
+                    <li><a href="#" class="hover:underline">Câu hỏi thường gặp</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-serif text-lg font-bold mb-4 text-beige-50">Đăng Ký Nhận Tin</h4>
+                <p class="text-xs text-beige-300 font-light mb-4">Nhận thông tin bộ sưu tập mới và ưu đãi đặc biệt dành riêng cho bạn.</p>
+                <form onsubmit="handleNewsletter(event)" class="space-y-2">
+                    <input type="email" placeholder="Nhập email của bạn..." required class="w-full bg-beige-800 border border-beige-700 rounded-lg px-4 py-2.5 text-xs text-white placeholder-beige-400 focus:outline-none focus:border-beige-400">
+                    <button type="submit" class="w-full bg-beige-100 text-beige-900 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-white transition-colors">Đăng Ký</button>
+                </form>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-beige-400">
+            <p>© 2026 MUM'S ATELIER. All rights reserved.</p>
+            <div class="flex space-x-6 mt-4 sm:mt-0">
+                <a href="#" class="hover:underline">Điều khoản bảo mật</a>
+                <a href="#" class="hover:underline">Điều kiện sử dụng</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="product-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 transition-opacity opacity-0">
+        <div class="bg-beige-50 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative transform scale-95 transition-transform duration-300" id="modal-content-box">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 w-10 h-10 bg-beige-100 rounded-full flex items-center justify-center text-beige-900 hover:bg-beige-200 transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="modal-details-body" class="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 sm:p-10">
+                <!-- Dynamic Content Here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- CART DRAWER -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden justify-end transition-opacity opacity-0">
+        <div class="w-full max-w-md bg-beige-50 h-full flex flex-col justify-between shadow-2xl transform translate-x-full transition-transform duration-300" id="cart-drawer-content">
+            <!-- Cart Header -->
+            <div class="p-6 border-b border-beige-200 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-bag-shopping text-xl text-beige-900"></i>
+                    <h3 class="font-serif text-xl font-bold">Giỏ Hàng Của Bạn</h3>
+                </div>
+                <button onclick="toggleCartDrawer()" class="text-beige-900 p-2 hover:bg-beige-100 rounded-full transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Cart Items List -->
+            <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4 divide-y divide-beige-200/60">
+                <!-- Dynamic Cart Items -->
+            </div>
+
+            <!-- Cart Footer -->
+            <div class="p-6 border-t border-beige-200 bg-white space-y-4">
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-beige-800">Tạm tính:</span>
+                    <span id="cart-subtotal" class="font-bold text-base">0₫</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-beige-800">Phí vận chuyển:</span>
+                    <span class="font-medium text-emerald-600">Miễn phí</span>
+                </div>
+                <div class="flex justify-between items-center text-lg font-bold border-t border-beige-200 pt-3">
+                    <span>Tổng cộng:</span>
+                    <span id="cart-total" class="text-beige-900 text-xl font-serif">0₫</span>
+                </div>
+                <button onclick="checkout()" class="w-full bg-beige-900 text-beige-50 py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-beige-800 transition-all shadow-lg">
+                    Thanh Toán Ngay <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEARCH MODAL -->
+    <div id="search-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex-col items-center justify-start pt-20 p-4 transition-opacity opacity-0">
+        <div class="bg-beige-50 rounded-2xl max-w-xl w-full p-6 shadow-2xl relative">
+            <div class="flex items-center justify-between pb-4 border-b border-beige-200">
+                <div class="flex items-center space-x-3 flex-1 mr-4">
+                    <i class="fa-solid fa-magnifying-glass text-beige-400"></i>
+                    <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Tìm kiếm đầm, áo sơ mi, chân váy..." class="w-full bg-transparent text-beige-900 placeholder-beige-400 focus:outline-none text-base">
+                </div>
+                <button onclick="closeSearchModal()" class="text-beige-900 p-2">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <div id="search-results" class="mt-4 max-h-80 overflow-y-auto space-y-3">
+                <!-- Results populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-beige-900 text-beige-50 px-6 py-3 rounded-xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 flex items-center space-x-3">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toast-message" class="text-xs font-medium tracking-wide">Đã thêm sản phẩm vào giỏ hàng</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- Mock Data ---
+        const products = [
+            {
+                id: 1,
+                name: "Đầm Midi Linen Tự Nhiên",
+                category: "Đầm",
+                price: 1250000,
+                originalPrice: 1500000,
+                tag: "Best Seller",
+                image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800",
+                additionalImages: [
+                    "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&q=80&w=800"
+                ],
+                colors: ["Beige", "Trắng kem", "Xanh olive"],
+                sizes: ["S", "M", "L"],
+                description: "Thiết kế đầm midi thanh lịch với chất liệu linen tự nhiên cao cấp, thoáng mát và mềm mại. Đường may tỉ mỉ 'Made by Mum' mang lại cảm giác thoải mái suốt cả ngày dài."
+            },
+            {
+                id: 2,
+                name: "Áo Sơ Mi Lụa Hàn Quốc",
+                category: "Áo sơ mi",
+                price: 780000,
+                originalPrice: 920000,
+                tag: "New",
+                image: "https://images.unsplash.com/photo-1598554747436-c9293d6a588f?auto=format&fit=crop&q=80&w=800",
+                additionalImages: [
+                    "https://images.unsplash.com/photo-1598554747436-c9293d6a588f?auto=format&fit=crop&q=80&w=800"
+                ],
+                colors: ["Trắng", "Hồng pastel", "Beige sáng"],
+                sizes: ["S", "M", "L"],
+                description: "Áo sơ mi chất liệu lụa Hàn Quốc mềm rũ, không nhăn nhàu, tôn lên vóc dáng tinh tế và sang trọng cho quý cô công sở."
+            },
+            {
+                id: 3,
+                name: "Chân Váy Xếp Ly Dài",
+                category: "Chân váy",
+                price: 850000,
+                originalPrice: 990000,
+                tag: "Sale",
+                image: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?auto=format&fit=crop&q=80&w=800",
+                additionalImages: [
+                    "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?auto=format&fit=crop&q=80&w=800"
+                ],
+                colors: ["Đen", "Nâu be", "Xám nhạt"],
+                sizes: ["S", "M", "L"],
+                description: "Chân váy xếp ly cạp cao hack dáng cực đỉnh, chất liệu voan lót lụa cao cấp thướt tha trong từng bước di chuyển."
+            },
+            {
+                id: 4,
+                name: "Set Bộ Blazer & Quần Short Linen",
+                category: "Set bộ",
+                price: 1550000,
+                originalPrice: 1800000,
+                tag: "Best Seller",
+                image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&q=80&w=800",
+                additionalImages: [
+                    "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&q=80&w=800"
+                ],
+                colors: ["Beige sữa", "Xanh mint"],
+                sizes: ["S", "M", "L"],
+                description: "Set đồ thời thượng phù hợp dạo phố hoặc đi làm nhẹ nhàng. Phom dáng chuẩn chỉnh, đứng form nhưng vẫn cực kỳ thoáng mát."
+            },
+            {
+                id: 5,
+                name: "Đầm Sơ Mi Cổ Vest",
+                category: "Đầm",
+                price: 1150000,
+                originalPrice: 1350000,
+                tag: "New",
+                image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&q=80&w=800",
+                additionalImages: [
+                    "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&q=80&w=800"
+                ],
+                colors: ["Beige", "Xanh Navy"],
+                sizes: ["S", "M", "L"],
+                description: "Đầm sơ mi thanh lịch với điểm nhấn thắt lưng eo tôn dáng, thanh thoát và hiện đại."
+            },
+            {
+                id: 6,
+                name: "Áo Kiểu Cổ Nơ Điệu Đà",
+                category: "Áo sơ mi",
+                price: 650000,
+                originalPrice: 750000,
+                tag: "Sale",
+                image: "https://images.unsplash.com/photo-1551803091-e203cbd1d13a?auto=format&fit=crop&q=80&w=800",
+                additionalImages: [
+                    "https://images.unsplash.com/photo-1551803091-e203cbd1d13a?auto=format&fit=crop&q=80&w=800"
+                ],
+                colors: ["Trắng", "Vàng pastel"],
+                sizes: ["S", "M", "L"],
+                description: "Áo kiểu nhẹ nhàng với điểm nhấn nơ cổ nữ tính, dễ dàng phối cùng chân váy hoặc quần tây."
+            },
+            {
+                id: 7,
+                name: "Chân Váy Chữ A Công Sở",
+                category: "Chân váy",
+                price: 690000,
+                originalPrice: 800000,
+                tag: "New",
+                image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800",
+                additionalImages: [
+                    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800"
+                ],
+                colors: ["Đen", "Be", "Nâu"],
+                sizes: ["S", "M", "L"],
+                description: "Chân váy chữ A kinh điển không bao giờ lỗi mốt, thiết kế cạp cao thanh lịch."
+            },
+            {
+                id: 8,
+                name: "Set Áo Croptop & Chân Váy Midi",
+                category: "Set bộ",
+                price: 1390000,
+                originalPrice: 1600000,
+                tag: "Best Seller",
+                image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=800",
+                additionalImages: [
+                    "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=800"
+                ],
+                colors: ["Beige", "Hồng đất"],
+                sizes: ["S", "M", "L"],
+                description: "Set bộ đồng điệu mang lại vẻ ngoài ngọt ngào, thời thượng cho những buổi hẹn cuối tuần."
+            }
+        ];
+
+        // --- App State ---
+        let cart = JSON.parse(localStorage.getItem('mums_cart')) || [];
+        let currentFilter = 'All';
+
+        // --- Format Currency ---
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+        }
+
+        // --- Render Products ---
+        function renderProducts(filter = 'All') {
+            const grid = document.getElementById('product-grid');
+            let filtered = products;
+            if (filter !== 'All') {
+                filtered = products.filter(p => p.category === filter);
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-beige-400">Không tìm thấy sản phẩm nào trong danh mục này.</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(product => `
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-beige-200/60 flex flex-col justify-between">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-beige-100 cursor-pointer" onclick="openProductModal(${product.id})">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        
+                        <!-- Tag Badge -->
+                        <div class="absolute top-3 left-3 flex flex-col gap-1">
+                            ${product.tag === 'Best Seller' ? '<span class="bg-beige-900 text-beige-50 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full shadow-sm">Best Seller</span>' : ''}
+                            ${product.tag === 'New' ? '<span class="bg-beige-400 text-white text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full shadow-sm">New Arrival</span>' : ''}
+                            ${product.tag === 'Sale' ? '<span class="bg-rose-500 text-white text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full shadow-sm">Sale</span>' : ''}
+                        </div>
+
+                        <!-- Quick view hover button -->
+                        <div class="absolute inset-x-0 bottom-4 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-4">
+                            <button onclick="event.stopPropagation(); openProductModal(${product.id})" class="w-full bg-white/90 backdrop-blur-md text-beige-900 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-beige-900 hover:text-white transition-all shadow-md">
+                                Xem Nhanh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-5 flex flex-col flex-1 justify-between">
+                        <div>
+                            <span class="text-[11px] uppercase tracking-widest text-beige-400 font-medium">${product.category}</span>
+                            <h3 onclick="openProductModal(${product.id})" class="font-serif text-base font-bold mt-1 text-beige-900 hover:text-beige-400 transition-colors cursor-pointer line-clamp-1">${product.name}</h3>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between pt-3 border-t border-beige-100">
+                            <div>
+                                <span class="font-bold text-beige-900 text-base">${formatCurrency(product.price)}</span>
+                                ${product.originalPrice ? `<span class="text-xs text-beige-400 line-through ml-2">${formatCurrency(product.originalPrice)}</span>` : ''}
+                            </div>
+                            <button onclick="quickAdd(${product.id})" class="w-10 h-10 bg-beige-100 hover:bg-beige-900 hover:text-white text-beige-900 rounded-full flex items-center justify-center transition-colors shadow-sm" title="Thêm vào giỏ">
+                                <i class="fa-solid fa-plus text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- Filter Category ---
+        function filterCategory(category) {
+            currentFilter = category;
+            
+            // Update active state of buttons
+            document.querySelectorAll('#filter-buttons button').forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.className = "px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all bg-beige-900 text-beige-50 shadow-sm";
+                } else {
+                    btn.className = "px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all bg-beige-100 text-beige-800 hover:bg-beige-200";
+                }
+            });
+
+            renderProducts(category);
+            
+            // Scroll to shop if clicked from category cards
+            if(category !== 'All') {
+                const shopSection = document.getElementById('shop');
+                shopSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // --- Product Modal ---
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const modal = document.getElementById('product-modal');
+            const modalBox = document.getElementById('modal-content-box');
+            const body = document.getElementById('modal-details-body');
+
+            body.innerHTML = `
+                <!-- Left: Images -->
+                <div class="space-y-4">
+                    <div class="aspect-[3/4] bg-beige-100 rounded-2xl overflow-hidden shadow-md">
+                        <img id="main-modal-img" src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <!-- Right: Details -->
+                <div class="flex flex-col justify-between space-y-6">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-beige-400 font-semibold">${product.category}</span>
+                        <h2 class="font-serif text-2xl sm:text-3xl font-bold mt-1 text-beige-900">${product.name}</h2>
+                        
+                        <div class="mt-3 flex items-center space-x-3">
+                            <span class="text-2xl font-bold text-beige-900">${formatCurrency(product.price)}</span>
+                            ${product.originalPrice ? `<span class="text-sm text-beige-400 line-through">${formatCurrency(product.originalPrice)}</span>` : ''}
+                        </div>
+
+                        <p class="text-beige-800/80 text-sm mt-4 font-light leading-relaxed">${product.description}</p>
+
+                        <!-- Colors Selection -->
+                        <div class="mt-6">
+                            <label class="block text-xs uppercase tracking-wider font-bold text-beige-900 mb-2">Màu sắc: <span id="selected-color-label" class="font-normal text-beige-800">${product.colors[0]}</span></label>
+                            <div class="flex gap-2">
+                                ${product.colors.map((c, i) => `
+                                    <button onclick="selectColor('${c}')" class="color-btn px-4 py-2 rounded-xl text-xs border ${i === 0 ? 'border-beige-900 bg-beige-900 text-white' : 'border-beige-200 bg-white text-beige-800 hover:border-beige-400'} transition-all font-medium" data-color="${c}">${c}</button>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Sizes Selection -->
+                        <div class="mt-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-xs uppercase tracking-wider font-bold text-beige-900">Kích thước: <span id="selected-size-label" class="font-normal text-beige-800">${product.sizes[0]}</span></label>
+                                <button class="text-[11px] text-beige-400 underline hover:text-beige-900">Hướng dẫn chọn size</button>
+                            </div>
+                            <div class="flex gap-3">
+                                ${product.sizes.map((s, i) => `
+                                    <button onclick="selectSize('${s}')" class="size-btn w-12 h-12 rounded-xl text-xs font-bold border ${i === 0 ? 'border-beige-900 bg-beige-900 text-white' : 'border-beige-200 bg-white text-beige-800 hover:border-beige-400'} transition-all flex items-center justify-center" data-size="${s}">${s}</button>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Quantity -->
+                        <div class="mt-6">
+                            <label class="block text-xs uppercase tracking-wider font-bold text-beige-900 mb-2">Số lượng</label>
+                            <div class="inline-flex items-center border border-beige-200 rounded-xl bg-white overflow-hidden shadow-sm">
+                                <button onclick="adjustModalQty(-1)" class="px-4 py-2 text-beige-800 hover:bg-beige-100 transition-colors"><i class="fa-solid fa-minus text-xs"></i></button>
+                                <span id="modal-qty" class="px-4 py-2 text-sm font-bold w-12 text-center">1</span>
+                                <button onclick="adjustModalQty(1)" class="px-4 py-2 text-beige-800 hover:bg-beige-100 transition-colors"><i class="fa-solid fa-plus text-xs"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add to cart button -->
+                    <div class="pt-6 border-t border-beige-200 flex gap-4">
+                        <button onclick="addToCartFromModal(${product.id})" class="flex-1 bg-beige-900 text-beige-50 py-4 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-beige-800 transition-all shadow-lg flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-bag-shopping"></i> Thêm Vào Giỏ Hàng
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalBox.classList.remove('scale-95');
+                modalBox.classList.add('scale-100');
+            }, 10);
+        }
+
+        let selectedColor = '';
+        let selectedSize = '';
+        let modalQty = 1;
+
+        function selectColor(color) {
+            selectedColor = color;
+            document.getElementById('selected-color-label').innerText = color;
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                if (btn.getAttribute('data-color') === color) {
+                    btn.className = "color-btn px-4 py-2 rounded-xl text-xs border border-beige-900 bg-beige-900 text-white transition-all font-medium";
+                } else {
+                    btn.className = "color-btn px-4 py-2 rounded-xl text-xs border border-beige-200 bg-white text-beige-800 hover:border-beige-400 transition-all font-medium";
+                }
+            });
+        }
+
+        function selectSize(size) {
+            selectedSize = size;
+            document.getElementById('selected-size-label').innerText = size;
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                if (btn.getAttribute('data-size') === size) {
+                    btn.className = "size-btn w-12 h-12 rounded-xl text-xs font-bold border border-beige-900 bg-beige-900 text-white transition-all flex items-center justify-center";
+                } else {
+                    btn.className = "size-btn w-12 h-12 rounded-xl text-xs font-bold border border-beige-200 bg-white text-beige-800 hover:border-beige-400 transition-all flex items-center justify-center";
+                }
+            });
+        }
+
+        function adjustModalQty(change) {
+            modalQty = Math.max(1, modalQty + change);
+            document.getElementById('modal-qty').innerText = modalQty;
+        }
+
+        function closeProductModal() {
+            const modal = document.getElementById('product-modal');
+            const modalBox = document.getElementById('modal-content-box');
+            modal.classList.add('opacity-0');
+            modalBox.classList.remove('scale-100');
+            modalBox.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                modalQty = 1;
+            }, 300);
+        }
+
+        // --- Cart Management ---
+        function quickAdd(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const defaultColor = product.colors[0];
+            const defaultSize = product.sizes[0];
+
+            addItemToCart(product, defaultColor, defaultSize, 1);
+        }
+
+        function addToCartFromModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const color = selectedColor || product.colors[0];
+            const size = selectedSize || product.sizes[0];
+
+            addItemToCart(product, color, size, modalQty);
+            closeProductModal();
+        }
+
+        function addItemToCart(product, color, size, quantity) {
+            const existingIndex = cart.findIndex(item => item.id === product.id && item.color === color && item.size === size);
+            
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += quantity;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    color: color,
+                    size: size,
+                    quantity: quantity
+                });
+            }
+
+            saveAndRenderCart();
+            showToast(`Đã thêm "${product.name}" vào giỏ hàng`);
+        }
+
+        function updateCartItemQty(index, change) {
+            cart[index].quantity += change;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            saveAndRenderCart();
+        }
+
+        function removeCartItem(index) {
+            cart.splice(index, 1);
+            saveAndRenderCart();
+        }
+
+        function saveAndRenderCart() {
+            localStorage.setItem('mums_cart', JSON.stringify(cart));
+            
+            // Update badge
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badge = document.getElementById('cart-badge');
+            badge.innerText = totalCount;
+            
+            // Render items in drawer
+            const container = document.getElementById('cart-items-container');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-20 text-beige-400">
+                        <i class="fa-solid fa-bag-shopping text-4xl mb-3 opacity-40"></i>
+                        <p class="text-sm font-medium">Giỏ hàng của bạn đang trống</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = cart.map((item, index) => `
+                    <div class="flex gap-4 pt-4 first:pt-0">
+                        <img src="${item.image}" alt="${item.name}" class="w-20 h-24 object-cover rounded-xl bg-beige-100 flex-shrink-0">
+                        <div class="flex-1 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-serif font-bold text-sm text-beige-900 line-clamp-1">${item.name}</h4>
+                                    <button onclick="removeCartItem(${index})" class="text-beige-400 hover:text-rose-500 transition-colors ml-2"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                                </div>
+                                <p class="text-xs text-beige-500 mt-0.5">Phân loại: ${item.color} / Size ${item.size}</p>
+                            </div>
+                            <div class="flex justify-between items-center mt-3">
+                                <span class="font-bold text-sm text-beige-900">${formatCurrency(item.price)}</span>
+                                <div class="inline-flex items-center border border-beige-200 rounded-lg bg-white overflow-hidden">
+                                    <button onclick="updateCartItemQty(${index}, -1)" class="px-2.5 py-1 text-beige-800 hover:bg-beige-100"><i class="fa-solid fa-minus text-[10px]"></i></button>
+                                    <span class="px-2 py-1 text-xs font-bold w-6 text-center">${item.quantity}</span>
+                                    <button onclick="updateCartItemQty(${index}, 1)" class="px-2.5 py-1 text-beige-800 hover:bg-beige-100"><i class="fa-solid fa-plus text-[10px]"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Calculate Totals
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('cart-subtotal').innerText = formatCurrency(subtotal);
+            document.getElementById('cart-total').innerText = formatCurrency(subtotal);
+        }
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            const drawerContent = document.getElementById('cart-drawer-content');
+            
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                drawer.classList.add('flex');
+                setTimeout(() => {
+                    drawer.classList.remove('opacity-0');
+                    drawerContent.classList.remove('translate-x-full');
+                }, 10);
+            } else {
+                drawer.classList.add('opacity-0');
+                drawerContent.classList.add('translate-x-full');
+                setTimeout(() => {
+                    drawer.classList.remove('flex');
+                    drawer.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // --- Checkout Mock ---
+        function checkout() {
+            if (cart.length === 0) {
+                showToast("Giỏ hàng của bạn đang trống!", true);
+                return;
+            }
+
+            // Simulate successful checkout
+            cart = [];
+            saveAndRenderCart();
+            toggleCartDrawer();
+            showToast("Đặt hàng thành công! Mum sẽ liên hệ xác nhận đơn.");
+        }
+
+        // --- Search Modal ---
+        function openSearchModal() {
+            const modal = document.getElementById('search-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                document.getElementById('search-input').focus();
+            }, 10);
+        }
+
+        function closeSearchModal() {
+            const modal = document.getElementById('search-modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                document.getElementById('search-input').value = '';
+                document.getElementById('search-results').innerHTML = '';
+            }, 300);
+        }
+
+        function handleSearch(keyword) {
+            const container = document.getElementById('search-results');
+            if (!keyword.trim()) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const results = products.filter(p => p.name.toLowerCase().includes(keyword.toLowerCase()) || p.category.toLowerCase().includes(keyword.toLowerCase()));
+
+            if (results.length === 0) {
+                container.innerHTML = `<p class="text-xs text-beige-400 text-center py-4">Không tìm thấy sản phẩm phù hợp.</p>`;
+                return;
+            }
+
+            container.innerHTML = results.map(p => `
+                <div onclick="closeSearchModal(); openProductModal(${p.id})" class="flex items-center gap-4 p-2 hover:bg-beige-100 rounded-xl cursor-pointer transition-colors">
+                    <img src="${p.image}" class="w-12 h-14 object-cover rounded-lg bg-beige-200">
+                    <div>
+                        <h4 class="font-serif font-bold text-sm text-beige-900">${p.name}</h4>
+                        <p class="text-xs text-beige-500 mt-0.5">${formatCurrency(p.price)}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- Mobile Menu ---
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            const content = document.getElementById('mobile-menu-content');
+            menu.classList.remove('hidden');
+            setTimeout(() => {
+                menu.classList.remove('opacity-0');
+                content.classList.remove('-translate-x-full');
+            }, 10);
+        });
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const content = document.getElementById('mobile-menu-content');
+            menu.classList.add('opacity-0');
+            content.classList.add('-translate-x-full');
+            setTimeout(() => {
+                menu.classList.add('hidden');
+            }, 300);
+        }
+
+        // --- Toast Notification ---
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function handleNewsletter(e) {
+            e.preventDefault();
+            showToast("Đăng ký nhận tin thành công! Cảm ơn bạn.");
+            e.target.reset();
+        }
+
+        // --- Initialize ---
+        window.onload = function() {
+            renderProducts('All');
+            saveAndRenderCart();
+        };
+    </script>
+</body>
+</html>
